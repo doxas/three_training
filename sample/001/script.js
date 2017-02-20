@@ -24,11 +24,10 @@
             aspect: width / height,
             near: 0.1,
             far: 10.0,
-            position: {
-                x: 0.0,
-                y: 0.0,
-                z: 5.0
-            }
+            x: 0.0,
+            y: 0.0,
+            z: 5.0,
+            lookAt: new THREE.Vector3(0.0, 0.0, 0.0)
         };
         let RENDERER_PARAMETER = {
             clearColor: 0xffffff,
@@ -49,10 +48,10 @@
             CAMERA_PARAMETER.near,
             CAMERA_PARAMETER.far
         );
-        camera.position.x = CAMERA_PARAMETER.position.x;
-        camera.position.y = CAMERA_PARAMETER.position.y;
-        camera.position.z = CAMERA_PARAMETER.position.z;
-        camera.lookAt(scene.position);
+        camera.position.x = CAMERA_PARAMETER.x;
+        camera.position.y = CAMERA_PARAMETER.y;
+        camera.position.z = CAMERA_PARAMETER.z;
+        camera.lookAt(CAMERA_PARAMETER.lookAt);
 
         // initialize renderer
         renderer = new THREE.WebGLRenderer();
@@ -68,7 +67,6 @@
 
         // rendering
         renderer.render(scene, camera);
-
     }, false);
 })();
 
