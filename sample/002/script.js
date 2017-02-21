@@ -1,14 +1,20 @@
 
-// = 001 ======================================================================
-// first scene
+// = 002 ======================================================================
+// first animation
 // ============================================================================
 
 (() => {
     window.addEventListener('load', () => {
-        // variables
+        // variables @@@
+        let run = true;
         let width = window.innerWidth;
         let height = window.innerHeight;
         let targetDOM = document.getElementById('webgl');
+
+        // event @@@
+        window.addEventListener('keydown', (eve) => {
+            run = eve.keyCode !== 27;
+        }, false);
 
         // three.js class
         let scene;
@@ -65,8 +71,16 @@
         box = new THREE.Mesh(getmetry, material);
         scene.add(box);
 
-        // rendering
-        renderer.render(scene, camera);
+        // rendering @@@
+        render();
+        function render(){
+            // rotation camera
+            camera.rotation.y += 0.05;
+            // rendering
+            renderer.render(scene, camera);
+            // animation
+            if(run){requestAnimationFrame(render);}
+        }
     }, false);
 })();
 
