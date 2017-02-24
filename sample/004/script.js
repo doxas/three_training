@@ -75,7 +75,7 @@
 
         // initialize light @@@
         light = new THREE.DirectionalLight(0xffffff);
-        scene.add(light)
+        scene.add(light);
 
         // variable
         let count = 0;
@@ -86,14 +86,14 @@
             // increment counter
             count++;
             // math
-            let s = Math.sin(count * 0.1);
-            let c = Math.cos(count * 0.1);
+            let s = Math.sin(count * 0.05);
+            let c = Math.cos(count * 0.05);
             // translate box
             box.position.x = c;
             box.position.z = s;
             // rotate box
-            box.rotation.x += 0.05;
-            box.rotation.y += 0.05;
+            box.rotation.x += 0.01;
+            box.rotation.y += 0.01;
             // rendering
             renderer.render(scene, camera);
             // animation

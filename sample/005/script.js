@@ -1,6 +1,6 @@
 
-// = 003 ======================================================================
-// rotation origin
+// = 005 ======================================================================
+// ambient light
 // ============================================================================
 
 (() => {
@@ -23,6 +23,8 @@
         let getmetry;
         let material;
         let box;
+        let directional; // directional light
+        let ambient;     // ambient light @@@
 
         // parameter
         let CAMERA_PARAMETER = {
@@ -67,25 +69,32 @@
 
         // initialize getmetry
         getmetry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
-        material = new THREE.MeshBasicMaterial(MATERIAL_PARAMETER);
+        // change material type
+        material = new THREE.MeshLambertMaterial(MATERIAL_PARAMETER);
         box = new THREE.Mesh(getmetry, material);
         scene.add(box);
 
-        // variable @@@
+        // initialize light @@@
+        directional = new THREE.DirectionalLight(0xffffff);
+        ambient = new THREE.AmbientLight(0xffffff, 0.2);
+        scene.add(directional);
+        scene.add(ambient);
+
+        // variable
         let count = 0;
 
         // rendering
         render();
         function render(){
-            // increment counter @@@
+            // increment counter
             count++;
-            // math @@@
+            // math
             let s = Math.sin(count * 0.05);
             let c = Math.cos(count * 0.05);
-            // translate box @@@
+            // translate box
             box.position.x = c;
             box.position.z = s;
-            // rotate box @@@
+            // rotate box
             box.rotation.x += 0.01;
             box.rotation.y += 0.01;
             // rendering
