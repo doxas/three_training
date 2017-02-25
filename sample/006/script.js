@@ -1,6 +1,6 @@
 
-// = 004 ======================================================================
-// first light
+// = 006 ======================================================================
+// phong shading
 // ============================================================================
 
 (() => {
@@ -23,7 +23,8 @@
         let getmetry;
         let material;
         let box;
-        let light; // directionalLight @@@
+        let directional; // directional light
+        let ambient;     // ambient light
 
         // parameter
         let CAMERA_PARAMETER = {
@@ -41,8 +42,10 @@
             width: width,
             height: height
         };
+        // change material parameter
         let MATERIAL_PARAMETER = {
-            color: 0xff9933
+            color: 0xff9933,
+            specular: 0xffffff
         };
 
         // initialize scene
@@ -69,13 +72,15 @@
         // initialize getmetry
         getmetry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
         // change mesh type @@@
-        material = new THREE.MeshLambertMaterial(MATERIAL_PARAMETER);
+        material = new THREE.MeshPhongMaterial(MATERIAL_PARAMETER);
         box = new THREE.Mesh(getmetry, material);
         scene.add(box);
 
-        // initialize light @@@
-        light = new THREE.DirectionalLight(0xffffff);
-        scene.add(light);
+        // initialize light
+        directional = new THREE.DirectionalLight(0xffffff);
+        ambient = new THREE.AmbientLight(0xffffff, 0.2);
+        scene.add(directional);
+        scene.add(ambient);
 
         // variable
         let count = 0;

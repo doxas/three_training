@@ -69,7 +69,6 @@
 
         // initialize getmetry
         getmetry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
-        // change material type
         material = new THREE.MeshLambertMaterial(MATERIAL_PARAMETER);
         box = new THREE.Mesh(getmetry, material);
         scene.add(box);
