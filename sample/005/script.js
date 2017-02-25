@@ -20,7 +20,7 @@
         let scene;
         let camera;
         let renderer;
-        let getmetry;
+        let geometry;
         let material;
         let box;
         let directional; // directional light
@@ -67,10 +67,10 @@
         renderer.setSize(RENDERER_PARAMETER.width, RENDERER_PARAMETER.height);
         targetDOM.appendChild(renderer.domElement);
 
-        // initialize getmetry
-        getmetry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
+        // initialize geometry
+        geometry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
         material = new THREE.MeshLambertMaterial(MATERIAL_PARAMETER);
-        box = new THREE.Mesh(getmetry, material);
+        box = new THREE.Mesh(geometry, material);
         scene.add(box);
 
         // initialize light @@@
