@@ -112,14 +112,9 @@
         scene.add(directional);
         scene.add(ambient);
 
-        // variable
-        let count = 0;
-
         // rendering
         render();
         function render(){
-            // increment counter
-            count++;
             // group transform @@@
             group.rotation.x += 0.01;
             group.rotation.y += 0.01;
