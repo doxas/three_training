@@ -1,6 +1,6 @@
 
-// = 010 ======================================================================
-// geometry group
+// = 011 ======================================================================
+// drop shadow
 // ============================================================================
 
 (() => {
@@ -23,20 +23,22 @@
         let renderer;
         let geometry;
         let material;
+        let plane; // plane geometry @@@
         let box;
         let sphere;
         let cone;
         let torus;
-        let group; // geometry group @@@
+        let group;
         let directional;
         let ambient;
+        let helper // helper geometry @@@
 
         // parameter
         let CAMERA_PARAMETER = {
             fovy: 60,
             aspect: width / height,
             near: 0.1,
-            far: 10.0,
+            far: 50.0, // change far @@@
             x: 0.0,
             y: 2.0,
             z: 5.0,
@@ -75,53 +77,74 @@
         renderer = new THREE.WebGLRenderer();
         renderer.setClearColor(new THREE.Color(RENDERER_PARAMETER.clearColor));
         renderer.setSize(RENDERER_PARAMETER.width, RENDERER_PARAMETER.height);
+        renderer.shadowMap.enabled = true; // shadow enable @@@
         targetDOM.appendChild(renderer.domElement);
 
         // initialize geometry
         material = new THREE.MeshPhongMaterial(MATERIAL_PARAMETER);
+        // plane @@@
+        geometry = new THREE.PlaneGeometry(10.0, 10.0);
+        plane = new THREE.Mesh(geometry, material);
+        plane.castShadow = false;   // none cast shadow @@@
+        plane.receiveShadow = true; // receive shadow @@@
+        plane.rotation.x = -Math.PI / 2.0;
+        plane.position.set(0.0, -1.0, 0.0);
         // box
         geometry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
         box = new THREE.Mesh(geometry, material);
-        box.position.set(2.0, 0.0, 0.0); // default position @@@
+        box.castShadow = true;    // shadow @@@
+        box.receiveShadow = true; // shadow @@@
+        box.position.set(2.0, 0.0, 0.0);
         // sphere
         geometry = new THREE.SphereGeometry(0.5, 8, 6);
         sphere = new THREE.Mesh(geometry, material);
-        sphere.position.set(0.0, 0.0, 2.0); // default position @@@
+        sphere.castShadow = true;    // shadow @@@
+        sphere.receiveShadow = true; // shadow @@@
+        sphere.position.set(0.0, 0.0, 2.0);
         // cone
         geometry = new THREE.ConeGeometry(0.5, 1.0, 8);
         cone = new THREE.Mesh(geometry, material);
-        cone.position.set(-2.0, 0.0, 0.0); // default position @@@
+        cone.castShadow = true;    // shadow @@@
+        cone.receiveShadow = true; // shadow @@@
+        cone.position.set(-2.0, 0.0, 0.0);
         // torus
         geometry = new THREE.TorusGeometry(0.5, 0.2, 8, 10);
         torus = new THREE.Mesh(geometry, material);
-        torus.position.set(0.0, 0.0, -2.0); // default position @@@
+        torus.castShadow = true;    // shadow @@@
+        torus.receiveShadow = true; // shadow @@@
+        torus.position.set(0.0, 0.0, -2.0);
 
-        // geometry add to group @@@
+        // initialize light
+        directional = new THREE.DirectionalLight(0xffffff);
+        directional.position.set(3.0, 3.0, 3.0);  // change light position @@@
+        directional.castShadow = true;            // shadow enable @@@
+        directional.shadow.mapSize.width = 1024;  // shadow map size @@@
+        directional.shadow.mapSize.height = 1024; // shadow map size @@@
+        directional.shadow.camera.near = 0.1;     // shadow camera near @@@
+        directional.shadow.camera.far = 15.0;     // shadow camera far @@@
+        ambient = new THREE.AmbientLight(0xffffff, 0.2);
+
+        // helper @@@
+        helper = new THREE.CameraHelper(directional.shadow.camera);
+
+        // geometry add to group
         group = new THREE.Group();
         group.add(box);
         group.add(sphere);
         group.add(cone);
         group.add(torus);
 
-        // group add to scene @@@
-        scene.add(group);
-
-        // initialize light
-        directional = new THREE.DirectionalLight(0xffffff);
-        ambient = new THREE.AmbientLight(0xffffff, 0.2);
+        // add to scene @@@
         scene.add(directional);
         scene.add(ambient);
-
-        // variable
-        let count = 0;
+        scene.add(plane);
+        scene.add(group);
+        scene.add(helper);
 
         // rendering
         render();
         function render(){
-            // increment counter
-            count++;
-            // group transform @@@
-            group.rotation.x += 0.01;
+            // group rotation @@@
             group.rotation.y += 0.01;
             // rendering
             renderer.render(scene, camera);
