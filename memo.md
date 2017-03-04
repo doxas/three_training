@@ -8,6 +8,8 @@
 * culling は renderer が持ってる
 * 動的なスクリーンサイズの変更、つまり viewport の設定も renderer
 
+* テクスチャはマテリアルが持つ
+
 
 
 
